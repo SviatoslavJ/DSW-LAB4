@@ -19,6 +19,11 @@ if [ "$1" = "--logs" ]; then
     exit 0
 fi
 
+if [[ "$1" == "--help" ]]; then
+    show_help
+    exit 0
+fi
+
 if [ $# -ne 1 ]; then
     echo "Usage: $0 --logs <number_of_files>"
     exit 1
@@ -49,9 +54,6 @@ show_help() {
     # Dodaj więcej opcji, jeśli są dostępne
 }
 
-if [[ "$1" == "--help" ]]; then
-    show_help
-    exit 0
-fi
+
 
 
