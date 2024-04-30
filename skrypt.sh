@@ -1,10 +1,10 @@
 #!/bin/bash
 
-if [ "$1" = "--date" ]; then
+if [ "$1" = "--date" ] || [ "$1" = "-d" ]; then
 	date
 fi
 
-if [ "$1" = "--logs" ]; then
+if [ "$1" = "--logs" ] || [ "$1" = "-l" ]; then
     count=${2:-100}
 
     mkdir -p logx
@@ -44,16 +44,38 @@ for ((i=1; i<=$number_of_files; i++)); do
     echo "Creation date: $(date)" >> $filename
 done
 
-show_help() {
-    echo "Pomoc:"
-    echo "Użycie: skrypt.sh [OPCJE]"
-    echo "Dostępne opcje:"
-    echo "  --help       Wyświetla pomoc"
-    echo "  -a, --option-a    Opcja A"
-    echo "  -b, --option-b    Opcja B"
-    # Dodaj więcej opcji, jeśli są dostępne
-}
 
 
+if [ "$1" = "--help" ]; then
+    echo "Usage: $0 [--init] [--error <number of files>] [--logs <number of files>]"
+    echo ""
+    echo "Options:"
+    echo "  --init          Clone the repository and add its path to the PATH environment variable"
+    echo "  --error, -e     Create error files with the specified number of files"
+    echo "  --logs          Create log files with the specified number of files"
+    exit 0
+fi
 
+if [ "$1" = "--init" ]; then
+    git clone https://github.com/SviatoslavJ/DSW-LAB4/tree/v1.0
+    repo_dir="$(pwd)/repozytorium"
+    echo "export PATH="$repo_dir:$PATH"" >> ~/.bashrc
+    source ~/.bashrc 
+    echo "Repozytorium zostało sklonowane i ścieżka została dodana do PATH."
+    exit 0
+fi
 
+echo "Usage: $0 --init"
+
+if [ "$1" = "--error" ] || [ "$1" = "-e" ]; then
+    count=${2:-100}
+    mkdir -p errorx
+    for ((i=1; i<=$count; i++)); do
+        echo "File: error$i.txt" > errorx/error$i.txt
+        echo "Created by: $0" >> errorx/error$i.txt
+        echo "Date: $(date)" >> errorx/error$i.txt
+    done
+
+    echo "Created $count files in the errorx directory."
+    exit 0
+fi
