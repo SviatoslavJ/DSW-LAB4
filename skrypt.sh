@@ -1,10 +1,10 @@
 #!/bin/bash
 
-if [ "$1" = "--date" ]; then
+if [ "$1" = "--date" ] || [ "$1" = "-d" ]; then
 	date
 fi
 
-if [ "$1" = "--logs" ]; then
+if [ "$1" = "--logs" ] || [ "$1" = "-l" ]; then
     count=${2:-100}
 
     mkdir -p logx
@@ -49,7 +49,7 @@ show_help() {
     # Dodaj więcej opcji, jeśli są dostępne
 }
 
-if [[ "$1" == "--help" ]]; then
+if [[ "$1" == "--help" ]] || [[ "$1" = "-h" ]]; then
     show_help
     exit 0
 fi
