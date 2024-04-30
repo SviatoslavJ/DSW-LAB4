@@ -24,12 +24,12 @@ if [ $# -ne 1 ]; then
     exit 1
 fi
 
-if ! [[ $1 =~ ^[0-9]+$ ]]; then
+if ! [[ $2 =~ ^[0-9]+$ ]]; then
     echo "Error: Number of files must be a positive integer"
     exit 1
 fi
 
-number_of_files=$1
+number_of_files=$2
 
 for ((i=1; i<=$number_of_files; i++)); do
     filename="log$i.txt"
