@@ -19,17 +19,22 @@ if [ "$1" = "--logs" ]; then
     exit 0
 fi
 
+if [[ "$1" == "--help" ]]; then
+    show_help
+    exit 0
+fi
+
 if [ $# -ne 1 ]; then
     echo "Usage: $0 --logs <number_of_files>"
     exit 1
 fi
 
-if ! [[ $1 =~ ^[0-9]+$ ]]; then
+if ! [[ $2 =~ ^[0-9]+$ ]]; then
     echo "Error: Number of files must be a positive integer"
     exit 1
 fi
 
-number_of_files=$1
+number_of_files=$2
 
 for ((i=1; i<=$number_of_files; i++)); do
     filename="log$i.txt"
@@ -38,3 +43,17 @@ for ((i=1; i<=$number_of_files; i++)); do
     echo "Script name: $0" >> $filename
     echo "Creation date: $(date)" >> $filename
 done
+
+show_help() {
+    echo "Pomoc:"
+    echo "Użycie: skrypt.sh [OPCJE]"
+    echo "Dostępne opcje:"
+    echo "  --help       Wyświetla pomoc"
+    echo "  -a, --option-a    Opcja A"
+    echo "  -b, --option-b    Opcja B"
+    # Dodaj więcej opcji, jeśli są dostępne
+}
+
+
+
+
